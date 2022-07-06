@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseUser user;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,26 +33,20 @@ public class MainActivity extends AppCompatActivity {
         EditText email_input = findViewById(R.id.email_input);
         EditText password_input = findViewById(R.id.password_in);
         Button login = findViewById(R.id.button);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = email_input.getText().toString();
-                String password = password_input.getText().toString();
-                signinUser(email,password);
-            }
+        login.setOnClickListener(v -> {
+            String email = email_input.getText().toString();
+            String password = password_input.getText().toString();
+            signinUser(email,password);
         });
     }
 
     private void signinUser(String email, String password) {
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    Intent intent = new Intent(MainActivity.this,CreateAccount.class);
-                    startActivity(intent);
-                }else{
-                    Toast.makeText(MainActivity.this, "Login Unsucessful", Toast.LENGTH_SHORT).show();
-                }
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
+            if (task.isSuccessful()){
+                Intent intent = new Intent(MainActivity.this,CreateAccount.class);
+                startActivity(intent);
+            }else{
+                Toast.makeText(MainActivity.this, "Login Unsucessful", Toast.LENGTH_SHORT).show();
             }
         });
     }
