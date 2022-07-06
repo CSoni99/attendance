@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.ktx.Firebase;
 
 public class MainActivity extends AppCompatActivity {
-    private FirebaseAuth auth;
+    private FirebaseAuth mauth;
     private FirebaseUser user;
 
 
@@ -28,22 +28,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        auth = FirebaseAuth.getInstance();
+        mauth = FirebaseAuth.getInstance();
 
         EditText email_input = findViewById(R.id.email_input);
         EditText password_input = findViewById(R.id.password_in);
-        Button login = findViewById(R.id.button);
-        login.setOnClickListener(v -> {
+        Button crt_acc = findViewById(R.id.button);
+        crt_acc.setOnClickListener(v -> {
             String email = email_input.getText().toString();
             String password = password_input.getText().toString();
             signinUser(email,password);
         });
+
+        findViewById(R.id.button2).setOnClickListener(v -> {
+            String email = email_input.getText().toString();
+            String password = password_input.getText().toString();
+            loginUser(email,password);
+        });
     }
 
     private void signinUser(String email, String password) {
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
+        mauth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
             if (task.isSuccessful()){
                 Intent intent = new Intent(MainActivity.this,CreateAccount.class);
+                Toast.makeText(MainActivity.this, "Login sucessful", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }else{
                 Toast.makeText(MainActivity.this, "Login Unsucessful", Toast.LENGTH_SHORT).show();
@@ -51,10 +58,23 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void loginUser(String email, String password){
+        mauth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, task -> {
+            if (task.isSuccessful()){
+                Intent intent = new Intent(MainActivity.this,CreateAccount.class);
+                Toast.makeText(MainActivity.this, "Login sucessful", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+            }else{
+                Toast.makeText(MainActivity.this, "Login Unsucessful", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
     @Override
     protected void onStart() {
         super.onStart();
-        user = auth.getCurrentUser();
+        user = mauth.getCurrentUser();
         if (user!= null){
             reload();
         }
