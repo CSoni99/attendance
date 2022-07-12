@@ -7,17 +7,14 @@
     tools:context=".Dashboard">
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/submit_attendance"
         android:layout_width="141dp"
         android:layout_height="0dp"
         android:layout_marginTop="47dp"
-        android:layout_marginBottom="169dp"
         android:text="Present"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.098" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/Curr_Datetime"
@@ -28,5 +25,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/submit_attendance" />
 </androidx.constraintlayout.widget.ConstraintLayout>
